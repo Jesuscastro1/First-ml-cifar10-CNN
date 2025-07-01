@@ -16,10 +16,12 @@ LN[3] Data Augmentation
 
 Overview of what the code is: 
 
-Data augmentation is important when it comes to increasing a models accuracy and decreasing its chance of overfitting to the data. In the first real line of code we rescale all the images of the CIFAR-10 dataset to 1/255 of their original size. Why? Well we do this in order to lower the computational cost of each image and that many CNNs are designed to work with a fixed size. Moving on to the 2nd line of code we flip the data horizontally. An example of this would be like "/" -> "\" I flipped it! For random rotation there's value of .2 which results in rotating in a random amount in the range of [-20% * 360, 20% 360]. Random zoom with a factor of .1 will zoom in -10% / 10%. SO NOW you must be wondering what is the layers?? Well in a CNN you build it with multiple layers and this will be the first ones so we can make sure the model is good.
+Data augmentation is important when it comes to increasing a models accuracy and decreasing its chance of overfitting to the data. In the first real line of code we rescale all the images of the CIFAR-10 dataset to 1/255 of their original size. Why? In order to help the neural network train more stably and ensuring that all features are on the same scale. Moving on to the 2nd line of code we flip the data horizontally. An example of this would be like "d" -> "b" I flipped it! For random rotation there's value of .2 which results in rotating in a random amount in the range of ±20 degrees. Random zoom with a factor of .1 will zoom in -10% / 10%. SO NOW you must be wondering what is the layers?? Well in a CNN you build it with multiple layers and this will be the first ones so we can make sure the model is good.
 
 Summary: 
 LN[4] Resnet architecture 
 
 Overview of what the code is: 
+First we define what it is-residual block- giving in parameters necessary for a CNN. Such as filters(how many neurons), reg(regulariaztion which helps with overfitting and ensures the model stays on course), dropout_rate(what % of the neurons is values is ignored), downsample(will be explained), and expansion(will be explained). 
+The first part of the Residual block I want to talk about is the skip connection. This part is vital to our model! Skip connection is when the initial input value is added to the output of a layer or a block of layers. This is done because of the vanishing gradient problem. 
 
