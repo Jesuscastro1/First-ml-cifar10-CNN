@@ -73,7 +73,8 @@ For this layers its similar to the last with a few key changes. The strides can 
 
 Then now to if downsample / if somehow the shape doesn't match we can downsample the shortcut_x from earlier, which will flow into the next line of code in which we add f(x) + x = h(x) getting our final output value of the residual block.
 
-Summary: LN[5] 
+Summary: 
+LN[5] 
 This is the actual model architeture if you didn't know this is based off resnet :)) 
 
   Regularizer:
@@ -125,7 +126,15 @@ APPLYING SO WE DON'T OVERFIT!!
 
 So I know you're looking at the code and wondering why 10? It's so we have a neuron for each type of image in the dataset. I'll give an example lets say the img is a cat. And neuron 4 is the designated one for that. It'll be like neuron 4(cat) - 67% chance its a cat and then neuron 9(airplane) 23% chance its an airplane. We'll go with the one that has the highest probability. This is all possible by the softmax activation that we use in this layer turning it into probability. 
 
+Summary:
+LN[6] 
+Model Compiling 💩
 
+First line of code is just inputting the inputs(data) and inputting what is going to be used for the output(the whole model essentially thats why we used (x) after everything)
+
+Lines 2-6 is me defining the optimizer
+What do optimizers do for a cnn? 
+  
 
 
 
