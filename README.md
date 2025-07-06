@@ -76,8 +76,56 @@ Then now to if downsample / if somehow the shape doesn't match we can downsample
 Summary: LN[5] 
 This is the actual model architeture if you didn't know this is based off resnet :)) 
 
-Regularizer:
+  Regularizer:
 
-I use the L2 regularizer at 1e-4 as anything above that impaired the models accuracy for me. Its main purpose is to decrease overfitting within my model by punishing 
+I use the L2 regularizer at 1e-4 as anything above that impaired the models accuracy for me. Its main purpose is to decrease overfitting within my model by punishing large weights. 
+
+  Inputs: 
+  
+We have to specify the input value necessary in order for the process to occur properly. And using the CIFAR-10 the initial shape is (32,32,3)
+
+The next line we just apply the data augmentation from before. 
+
+Now we make our first and only layer not defined by the residual_block function. Having 64 neurons and a kernal_size of (7,7) the largest one in the whole model! It downsizes the image with strides = 2 making. ( shape = 16x16x64 ) Then we apply batchnormalization and ReLU before moving on to our first residual block. 
+
+  First residual layers??:
+
+We have 2 both with 64 filters, as well as dropout to decrease the chances of overfitting to the data we have presented the model. In the first one of these 2 I applied downsampling making the new shape 8x8x64.
+
+  Second residual layers: 
+
+Downsampled in the first 128 layer(will be common in the rest) new shape --> 4x4x128
+Increased the dropout rate by .05 --> new value is .15
+Increased neurons from 64 --> 128 
+
+  Third residual layers:
+
+Downsampled in the first 256 layer new shape --> 2x2x256
+Increased the dropout rate by .05 --> new value is .2
+Increased neurons from 128 --> 256 
+
+  Fourth Residual layers: 
+  
+Downsampled in the first 512 layer new shape --> 1x1x512
+Increased the dropout rate by .05 --> new value is .25
+Increased neurons from 256 --> 512
+
+  GAP2D:
+
+Reduced the spatial dimensions(hxW) of a feature map by calculating the average value of all elements within each feature map. It downsamples the shape and improves model efficiency and speed. This step is crucial for the dense layers to properly classify the images. 
+
+  1st Dense Layer: 
+
+Known as a full connected layer it receives input from all the neurons in the previous layer. Allowing the network to learn relationships between features extracted by the conv layers. 
+
+  Dropout: 
+APPLYING SO WE DON'T OVERFIT!!
+
+  2nd Dense layer: 
+
+So I know you're looking at the code and wondering why 10? It's so we have a neuron for each type of image in the dataset. I'll give an example lets say the img is a cat. And neuron 4 is the designated one for that. It'll be like neuron 4(cat) - 67% chance its a cat and then neuron 9(airplane) 23% chance its an airplane. We'll go with the one that has the highest probability. This is all possible by the softmax activation that we use in this layer turning it into probability. 
+
+
+
 
 
