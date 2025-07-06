@@ -37,38 +37,47 @@ The second line is activated when ever the input value of downsample is set to t
 
 First Layer Components:
 
-Convolutional Layer
+  Convolutional Layer:
 
 The first layer of code - 1st conv2d to 1st ReLU - we start with a convolutional layer which extracts features from input data. Using a kernel(filter it can be 1x1, 3x3, 5x5, 7x7, etc) which is a small matrices of learnable weights that are used to detect features in the input data(edges, textures, etc.). The output value of this is a feature map representing the respons of a specific filter across the input. Since there is typically multiple we stack them on top of each other which forms an output volume.
 
-Strides
+  Strides:
 
 Now we move on to the strides which is just how many pixels over does the kernel move. So a stride of 1 would mean the kernal moves over 1 pixel to the right. For visualizations I recommend using this website( https://poloclub.github.io/cnn-explainer/ ).
 
-Padding
+  Padding:
 
 Now for padding = 'same' adds extra rows and columns of pixels(typically 0s) around the borders of the input img/feature map. With this extra pixels he output(feature map) is the same as the dimensions as the input(only if stride = 1). So I know you must be wondering whats so important about this? Wouldn't it be more benefitial to downsize the image to make the CNN run faster? Well we do this because preservers spatial dimensions, handles edge effects( we don't want to lose important features of the edges), and simplifies network architecture(consistenty allows for easier designing of small and big network architectures).
 
-Kernel Initializer
+  Kernel Initializer:
 
 Kernal Initializer = 'he_normal' selects weights from nrmally distributed values with mean (μ)=0 and standard deviation (σ)= √2/√Fan-in. Its important to use an initializer as in most cases initial values for weights are random and the biases are given zero when orignally starting you NN. Which will lead to exploding/vanishing gradient! So using a kernel initalizer such as he_normal will solve that problem.
 
-Kernel Regularizer
+  Kernel Regularizer:
 
 Now for the kernel_regularizer which is used to prevent overfitting. Overfitting is when your model tunes towards the training data and isn't able to fit to the validation/testing data. To lessen the issue kernel regularization adds a penalty term to the loss function that the network optimizes during training.
 
-Batch Normalization
+  Batch Normalization:
 
 Batch Normalization helps stabilize and accelerating learning. Since its introduction to ML in 2015 it has become a staple. When applying batch normalization for a mini-batch(often powers of 2) it calculates the mean and variance of the activations. Then it normalizes the activations to have a mean of zero and a std of 1. This brings stability to the model and solves the problem of Internal Covariate Shift. So as we know as a NN learns the parameters are adjusted, these updates cause the distribution of the activations of each layer to change; therefore, the model is slower, instable, gradient problems, and has generalization issues(all solved mostly.. by batch normalization).
 
-ReLU Activation
+  ReLU Activation:
 
-Now for the ReLU(Rectified Linear Unit) introducing non-linearity by outputing 0 if the input is negative and outputting the direct input if its positive. Allowing for the model to learn more complex and real-world data. Because if a model does not have non-linearity it is basically just linear regression no matter how complex you make the model. So by adding this you solve that problem and increase a variety of positive factors. This concludes the first layer! I won't be going into this much detail for the next ones. I am going to go more in depth with the architecture and its importance.
+Now for the ReLU(Rectified Linear Unit) introducing non-linearity by outputting 0 if the input is negative and outputting the direct input if its positive. Allowing for the model to learn more complex and real-world data. Because if a model does not have non-linearity it is basically just linear regression no matter how complex you make the model. So by adding this you solve that problem and increase a variety of positive factors. This concludes the first layer! I won't be going into this much detail for the next ones. I am going to go more in depth with the architecture and its importance.
 
-Second Layer
+  Second Layer:
 
 For this layers its similar to the last with a few key changes. The strides can either be 2 or 1. 1 doesn't affect the shape of the input but 2 will half it so lets say we have 32x32 then it will go to 16x16(as explained earlier).
 
-Final Step
+  Final Step
 
 Then now to if downsample / if somehow the shape doesn't match we can downsample the shortcut_x from earlier, which will flow into the next line of code in which we add f(x) + x = h(x) getting our final output value of the residual block.
+
+Summary: LN[5] 
+This is the actual model architeture if you didn't know this is based off resnet :)) 
+
+Regularizer:
+
+I use the L2 regularizer at 1e-4 as anything above that impaired the models accuracy for me. Its main purpose is to decrease overfitting within my model by punishing 
+
+
