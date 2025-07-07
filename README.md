@@ -133,7 +133,11 @@ Model Compiling 💩
 First line of code is just inputting the inputs(data) and inputting what is going to be used for the output(the whole model essentially thats why we used (x) after everything)
 
 Lines 2-6 is me defining the optimizer
-What do optimizers do for a cnn? 
+  What do optimizers specifically AdamW do for a cnn?
+  
+  Optimizers:
+
+
   
 
 
