@@ -1,4 +1,4 @@
-So this is my first CNN! 
+ So this is my first CNN! 
 
 LN[1] We just get the packages we need to actually make the CNN. We also get numpy and sklearn model selection to split the data for the model we will be making 
 
@@ -136,9 +136,52 @@ Lines 2-6 is me defining the optimizer
   What do optimizers specifically AdamW do for a cnn?
   
   Optimizers:
+Play a huge role in training a CNN as they adject the parameters to minimize the loss function
 
+  AdamW:
+Customizes each parameter's learning rate based on its gradient history( gradients help as they point in the direction for the steepest ascent for the lost function ). AdamW decouples weight decay from the learning rate update. Applying weight decay directly to the parameters after the gradient update. 
 
-  
+It uses two important parts momentum and adaptive learning rates: 
 
+  Momentum: 
+Imagine a ball down a hill, it remembers that same direction and builds speed in that direction. If the gradients still point in the same way it will keep going down accelerating optimization in that direction. 
 
+  Adaptive Learning Rates: 
+Different learning rates for each parameter based on their gradient history. Different size steps for different parts of the hill.
+
+  Cosine  Decay: 
+Following cos(x) the lr of the AdamW optimizer will become smaller as the model progresses.
+
+Decay steps is how long it will take until the model will reach the bottom lr so 657*25 = 16425 interations until the lowest value. Our initial rate is .0008 and the lowest value will be 8e-7. ( Alpha = .001 = .1%) 
+
+  Model compile:
+So here I give the model the optimizer. Then I give it the way t calculate the loss using SpareCategoricalCrossentropy. Then I use accuracy for a metric to represent how model the doing when I run it. 
+
+  SpareCategoricalCrossentropy:
+True labels are represented as integers. Being computationally more efficient than other loss functions.
+
+Summary:
+LN[7]
+I was trying to figure out the optimial way for the CosineDecay to work.
+
+Summary:
+LN[8]
+My model and its parameters.
+
+Summary:
+LN[8]
+Training the model
+
+History = resmodel.fit() what this does is marks down how the model does for each epoch(iteration through the data).
+In the fit we place our training data first with the batch size. So that means until 64 images have passed through the model will then updata its self.
+After that we add the validation data which is used to see if the model is overfitting or underfitting. 
+Epochs the amount of times the model will run through the data and train its self to become better.
+Now for callbacks this is necessary to use for CNNs! I use a Early stopping function that will stop the model when the validation accuracy has not improved or has plateaued. Restoring the best version of the model when it does.
+
+Summary:
+LN[8]
+Test the model against test data
+
+Final Notes:
+So I am very new to ML so if anyone actually sees this please give me tips to improve. Thank you so much to anyone who skimmed through this or actually read it. I hope this helped in some way. 
 
